@@ -15,8 +15,16 @@ class Pokemon{
     //This is the best way to setup the information that is going to be stored and used in a class
     
     //Created variables for the information we need
-    fileprivate var _name: String!
-    fileprivate var _pokedexId: Int!
+    private var _name: String!
+    private var _pokedexId: Int!
+    private var _description: String!
+    private var _type: String!
+    private var _defense: String!
+    private var _height: String!
+    private var _weight: String!
+    private var _baseAttack: String!
+    private var _nextEvolutionTxt: String!
+    private var _pokemonURL: String!
     
     //Created the getters for the properties created above,  Its a good habbit to always do it right after the variables are created
     var name: String{
@@ -34,7 +42,14 @@ class Pokemon{
     init(name: String, pokedexId: Int) {
         self._name = name
         self._pokedexId = pokedexId
+        // Build API call with constants and pokedexID
+        self._pokemonURL = "\(URL_BASE)\(URL_POKEMON)\(self.pokedexId)"
     }
     
     //******************************************************************************************
+    
+    func downloadPokemonDetail(){
+        
+        
+    }
 }
