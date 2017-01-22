@@ -125,6 +125,18 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         
+        var poke: Pokemon!
+        
+        if inSearchMode{
+            
+            poke = filteredPokemon[indexPath.row]
+        } else{
+            poke = pokemon[indexPath.row]
+        }
+        
+        //  Make sure seguea is setup in story board
+        performSegue(withIdentifier: "PokemonDetailVC", sender: poke)
+        
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -181,6 +193,20 @@ class ViewController: UIViewController, UICollectionViewDelegate, UICollectionVi
             //we are setting filteredPokemon equal to the full array variable and seeing if anything that is in lower/ text in search bar is included in the range of that list.  Hope that makes sense
             filteredPokemon = pokemon.filter({$0.name.range(of: lower) != nil})
             collection.reloadData()
+        }
+        
+    }
+    
+    // Function to prepare data to be sent in segua
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        
+        if segue.identifier == "PokemonDetailVC" {
+            if let detailsVC = segue.destination as? PokemonDetailVC{
+                // Sender of type Pokemon which you can see is being sent from above on did select func and detailsVC is pulling from the PokemonDetailVC class where that var is defined
+                if let poke = sender as? Pokemon{
+                    detailsVC.pokemon = poke
+                }
+            }
         }
         
     }
