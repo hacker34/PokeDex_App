@@ -7,7 +7,7 @@
 //
 
 import Foundation
-
+import Alamofire
 // Creating a class that will store all the pokemon data (Blue Print for each pokemon that will be displayed in the App).  This is in the model folder of the MVC structure
 class Pokemon{
     
@@ -48,8 +48,41 @@ class Pokemon{
     
     //******************************************************************************************
     
-    func downloadPokemonDetail(){
+    func downloadPokemonDetail(completed: DownloadComplete){
         
-        
+        Alamofire.request(_pokemonURL!).responseJSON{ (response) in
+            
+           // print(self._pokemonURL)   --- Used to debug why JSON data wasn't showing properly
+            
+            // Basically storinging all the JSON data into the dict var as a Dictionary
+            if let dict = response.result.value as? Dictionary<String, AnyObject> {
+                
+                if let weight = dict["weight"] as? String {
+                    
+                    self._weight = weight
+                }
+                
+                if let height = dict["height"] as? String {
+                    
+                    self._height = height
+                }
+                
+                if let attack = dict["attack"] as? Int {
+                    
+                    self._baseAttack = "\(attack)"
+                }
+                
+                if let defense = dict["defense"] as? Int {
+                    
+                    self._defense = "\(defense)"
+                }
+                
+                print(self._weight)
+                print(self._height)
+                print(self._baseAttack)
+                print(self._defense)
+                
+            }
+        }
     }
 }

@@ -11,5 +11,7 @@ import Foundation
 
 //File is for things that are globally available
 
-let URL_BASE = "http://pokeapi.co"
+let URL_BASE = "http://pokeapi.co/"
 let URL_POKEMON = "api/v1/pokemon/"
+
+typealias DownloadComplete = () -> ()
