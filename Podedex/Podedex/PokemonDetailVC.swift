@@ -22,20 +22,44 @@ class PokemonDetailVC: UIViewController {
     @IBOutlet weak var attackLbl: UILabel!
     @IBOutlet weak var currentEvoImg: UIImageView!
     @IBOutlet weak var nextEvoImg: UIImageView!
+    @IBOutlet weak var nextEvolutiontxt: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
 
-       nameLbl.text = pokemon.name
+        nameLbl.text = pokemon.name.capitalized
+        // image is set here because we already know that data and dont have to request it.
         
+        let img = UIImage(named: "\(pokemon.pokedexId)")
+        mainImg.image = img
+        currentEvoImg.image = img
+        pokedexIdLbl.text = "\(pokemon.pokedexId)"
+        
+        // Need this function so it can update the UI after it downloads the JSON data
         pokemon.downloadPokemonDetail {
-            // Whaterver we write will only be called after the network call is complete!
+            
+            // Whatever we write will only be called after the network call is complete!
             self.updateUI()
         }
     }
     
     func updateUI(){
+        // Things are in here that are getting the data
+        attackLbl.text = pokemon.baseAttack
+        weightLbl.text = pokemon.weight
+        heightLbl.text = pokemon.height
+        defenseLbl.text = pokemon.defense
+        typeLbl.text = pokemon.type
+        descriptionLbl.text = pokemon.description
         
+        if pokemon.nextEvolutionID == ""{
+            nextEvolutiontxt.text = "No Evolutions"
+            nextEvoImg.isHidden = true
+        } else {
+            nextEvolutiontxt.text = "Next Evolution: \(pokemon.nextEvolutionName) LVL \(pokemon.nextEvolutionID)"
+            nextEvoImg.isHidden = false
+            nextEvoImg.image = UIImage(named: "\(pokemon.nextEvolutionID)")
+        }
         
     }
 
